@@ -10,7 +10,7 @@ import com.epam.pizza.service.PizzaServiceImpl;
 
 public class JavaConfig implements Config {
 
-	private Map<String, Class<?>> map = new HashMap<String, Class<?>>();
+	private final Map<String, Class<?>> map = new HashMap<String, Class<?>>();
 	
 	{
 		map.put("pizzaService", PizzaServiceImpl.class);

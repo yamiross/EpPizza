@@ -1,21 +1,30 @@
 package com.epam.pizza.infrastructure;
 
 import java.lang.reflect.Constructor;
+import java.util.HashMap;
+import java.util.Map;
 
 public class JavaConfigApplicationContext implements ApplicationContext {
 
 	private Config config;
+	private final Map<String, Object> beans = new HashMap<String, Object>();
 	
 	public JavaConfigApplicationContext(Config config) {
 		this.config = config;	}
 
 	public Object getBean(String beanName) throws Exception {
+		Object bean = beans.get(beanName);
+		if (bean != null) {
+			return bean;
+		}
+		
 		Class<?> clazz = config.getImplementation(beanName);
 		Constructor<?> constructor = clazz.getConstructors()[0]; 
 		Class<?>[] paramTypes = constructor.getParameterTypes();
-		
 		if (paramTypes.length == 0) {
-			return clazz.newInstance();
+			bean = clazz.newInstance();
+			beans.put(beanName, bean);
+			return bean;
 		}
 		
 		Object[] args = new Object[paramTypes.length];
@@ -26,6 +35,8 @@ public class JavaConfigApplicationContext implements ApplicationContext {
 			argBeanName = className.substring(0, 1).toLowerCase() + className.substring(1);
 			args[i] = getBean(argBeanName);
 		}
-		return constructor.newInstance(args);
+		bean = constructor.newInstance(args);
+		beans.put(beanName, bean);
+		return bean;
 	}
 }
