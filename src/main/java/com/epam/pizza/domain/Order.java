@@ -40,7 +40,7 @@ public class Order {
 	public void setPizzas(List<Pizza> pizzas) {
 		this.pizzas = pizzas;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "Order [id=" + id + ", \ncustomer=" + customer + ", \npizzas="
