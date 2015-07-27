@@ -14,10 +14,10 @@ import com.epam.pizza.infrastructure.Benchmark;
 //import com.epam.pizzaapp.infrastructure.ObjectFactory;
 import com.epam.pizza.repository.OrderRepository;
 
-public class OrderServiceImpl implements OrderService, ApplicationContextAware {
+public class OrderServiceImpl implements OrderService {
 	
 //	private ObjectFactory objectFactory = ObjectFactory.getInstance();
-	private ApplicationContext ctx;
+
 	private PizzaService pizzaService;
 	private OrderRepository orderRepository;
 	
@@ -46,12 +46,7 @@ public class OrderServiceImpl implements OrderService, ApplicationContextAware {
     }
 	
 	protected Order getNewOrder() {
-		return ctx.getBean("order", Order.class);
-	}
-
-	@Override
-	public void setApplicationContext(ApplicationContext ctx)
-			throws BeansException {
-		this.ctx = ctx;
+//		return ctx.getBean("order", Order.class);
+		return null;
 	}
 }
