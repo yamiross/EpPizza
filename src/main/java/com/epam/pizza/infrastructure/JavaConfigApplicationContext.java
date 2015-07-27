@@ -24,8 +24,8 @@ public class JavaConfigApplicationContext implements ApplicationContext {
 		
 		BeanBuilder beanBuilder = new BeanBuilder(beanName);
 		beanBuilder.createObject();
-		beanBuilder.createProxy();
 		beanBuilder.callInitMethod();
+		beanBuilder.createProxy();
 		
 		return beanBuilder.getObject();
 	}
@@ -62,7 +62,7 @@ public class JavaConfigApplicationContext implements ApplicationContext {
 			beans.put(beanName, obj);
 		}
 		
-		public void callInitMethod() throws Exception {
+		private void callInitMethod() throws Exception {
 			cl = obj.getClass();
 			Method method;
 			try {
@@ -73,42 +73,15 @@ public class JavaConfigApplicationContext implements ApplicationContext {
 			method.invoke(obj);
 		}
 		
-		public void createProxy() {
-			cl = obj.getClass();
-			Method[] methods = cl.getMethods();
-			for (Method m: methods) {
-				if (m.isAnnotationPresent(Benchmark.class)) {
-					obj = createProxyObject(obj);
-					break;
-				}
-			}
+		private void createProxy() {
+			ProxyForBenchmarkAnnotation proxyForBenchmarkAnnotation = new ProxyForBenchmarkAnnotation();
+			obj = proxyForBenchmarkAnnotation.checkAndCreateProxyObjForBenchmark(obj);
 		}
 		
-		private Object createProxyObject(final Object o) {
-			Class<?> cl = o.getClass();
-			return Proxy.newProxyInstance(cl.getClassLoader(), 
-									cl.getInterfaces(), 
-									new InvocationHandler() {
-										@Override
-										public Object invoke(Object proxy, Method method, Object[] args) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-											Method classMethod = cl.getMethod(method.getName(), method.getParameterTypes());
-											if (classMethod.isAnnotationPresent(Benchmark.class)) {
-												System.out.println("Benchmark starts " + method.getName());
-												long start = System.nanoTime();
-												Object returnVal = method.invoke(o,  args);
-												long finish = System.nanoTime();
-												System.out.println("Benchmark finished " + method.getName());
-												System.out.println("Benchmark time: " + (finish - start));
-												return returnVal;
-											}
-											return method.invoke(o,  args);
-										}
-									}
-			);
-		}
-		
-		public Object getObject() {
+		private Object getObject() {
 			return obj;
 		}
 	}
+	
+	
 }
