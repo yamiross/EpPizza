@@ -1,7 +1,10 @@
 package com.epam.pizza.infrastructure;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,7 +33,7 @@ public class JavaConfigApplicationContext implements ApplicationContext {
 	class BeanBuilder {
 		
 		private Object obj;
-		private Class cl;
+		private Class<?> cl;
 		private String beanName;
 		
 		public BeanBuilder(String beanName) {
@@ -38,11 +41,11 @@ public class JavaConfigApplicationContext implements ApplicationContext {
 		}
 
 		public void createObject() throws Exception {
-			Class<?> clazz = config.getImplementation(beanName);
-			Constructor<?> constructor = clazz.getConstructors()[0]; 
+			Class<?> cl = config.getImplementation(beanName);
+			Constructor<?> constructor = cl.getConstructors()[0]; 
 			Class<?>[] paramTypes = constructor.getParameterTypes();
 			if (paramTypes.length == 0) {
-				obj = clazz.newInstance();
+				obj = cl.newInstance();
 				beans.put(beanName, obj);
 				return;
 			}
@@ -71,7 +74,37 @@ public class JavaConfigApplicationContext implements ApplicationContext {
 		}
 		
 		public void createProxy() {
-			// TODO Auto-generated method stub
+			cl = obj.getClass();
+			Method[] methods = cl.getMethods();
+			for (Method m: methods) {
+				if (m.isAnnotationPresent(Benchmark.class)) {
+					obj = createProxyObject(obj);
+					break;
+				}
+			}
+		}
+		
+		private Object createProxyObject(final Object o) {
+			Class<?> cl = o.getClass();
+			return Proxy.newProxyInstance(cl.getClassLoader(), 
+									cl.getInterfaces(), 
+									new InvocationHandler() {
+										@Override
+										public Object invoke(Object proxy, Method method, Object[] args) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+											Method classMethod = cl.getMethod(method.getName(), method.getParameterTypes());
+											if (classMethod.isAnnotationPresent(Benchmark.class)) {
+												System.out.println("Benchmark starts " + method.getName());
+												long start = System.nanoTime();
+												Object returnVal = method.invoke(o,  args);
+												long finish = System.nanoTime();
+												System.out.println("Benchmark finished " + method.getName());
+												System.out.println("Benchmark time: " + (finish - start));
+												return returnVal;
+											}
+											return method.invoke(o,  args);
+										}
+									}
+			);
 		}
 		
 		public Object getObject() {

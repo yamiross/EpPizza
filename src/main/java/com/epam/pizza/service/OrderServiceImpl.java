@@ -6,6 +6,7 @@ import java.util.List;
 import com.epam.pizza.domain.Customer;
 import com.epam.pizza.domain.Order;
 import com.epam.pizza.domain.Pizza;
+import com.epam.pizza.infrastructure.Benchmark;
 //import com.epam.pizzaapp.infrastructure.ObjectFactory;
 import com.epam.pizza.repository.OrderRepository;
 
@@ -25,6 +26,7 @@ public class OrderServiceImpl implements OrderService {
 //		orderRepository = (OrderRepository) objectFactory.createObject("orderRepository");
 	}
 	
+	@Benchmark
 	public Order placeNewOrder(Customer customer, Integer ... pizzasID) {
         List<Pizza> pizzas = new ArrayList<Pizza>();
        
