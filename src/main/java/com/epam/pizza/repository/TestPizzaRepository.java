@@ -10,13 +10,6 @@ public class TestPizzaRepository implements PizzaRepository {
 	
 	private List<Pizza> pizzas;
 
-	public TestPizzaRepository() {}
-	
-	public TestPizzaRepository(List<Pizza> pizzas) {
-		super();
-		this.pizzas = pizzas;
-	}
-
 	public void init() {
 		pizzas = Arrays.asList(
 				new Pizza(1, "Neapolitana", 20.0, PizzaType.MEAT),
@@ -32,5 +25,15 @@ public class TestPizzaRepository implements PizzaRepository {
 			}
 		}
 		return null;
+	}
+
+	public List<Pizza> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public void save(Pizza pizza) {
+		// TODO Auto-generated method stub
+		
 	}
 }

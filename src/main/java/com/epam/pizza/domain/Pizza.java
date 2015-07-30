@@ -7,8 +7,12 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="PIZZA")
+@NamedQuery(name="findAll", query="SELECT p FROM Pizza p")
 public class Pizza {
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="PIZZA_ID")

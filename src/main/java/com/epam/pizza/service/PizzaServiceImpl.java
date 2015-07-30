@@ -1,25 +1,29 @@
 package com.epam.pizza.service;
 
-import com.epam.pizza.domain.Pizza;
-//import com.epam.pizzaapp.infrastructure.ObjectFactory;
-import com.epam.pizza.repository.PizzaRepository;
-import com.epam.pizza.repository.TestPizzaRepository;
+import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.transaction.Transactional;
+
+import com.epam.pizza.domain.Pizza;
+import com.epam.pizza.repository.PizzaRepository;
+
+@Named("pizzaService")
 public class PizzaServiceImpl implements PizzaService {
-	
-//	private ObjectFactory objectFactory = ObjectFactory.getInstance();
-	
-	private PizzaRepository pizzaRepository = new TestPizzaRepository();
-	
-	public PizzaServiceImpl(PizzaRepository pizzaRepository) throws InstantiationException, IllegalAccessException {
-		
-		this.pizzaRepository = pizzaRepository;
-		
-//		pizzaRepository = (PizzaRepository) objectFactory.createObject("pizzaRepository");
-	}
+	@Inject
+	private PizzaRepository pizzaRepository;
 	
 	public Pizza getPizzaByID(Integer id) {
 		return pizzaRepository.getPizzaByID(id);
 	}
 
+	public List<Pizza> findAll() {
+		return pizzaRepository.findAll();
+	}
+	
+	@Transactional
+	public void save(Pizza pizza) {
+		pizzaRepository.save(pizza);
+	}
 }
