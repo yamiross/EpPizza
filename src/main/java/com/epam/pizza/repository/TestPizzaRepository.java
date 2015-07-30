@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.epam.pizza.domain.Pizza;
 import com.epam.pizza.domain.PizzaType;
-import com.epam.pizza.infrastructure.Benchmark;
 
 public class TestPizzaRepository implements PizzaRepository {
 	

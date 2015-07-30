@@ -1,10 +1,24 @@
 package com.epam.pizza.domain;
 
-public class Pizza {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
+@Entity
+public class Pizza {
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="PIZZA_ID")
 	private Integer id;
+	@Column(name="PIZZA_NAME")
 	private String pizzaName;
+	@Column(name="PRICE")
 	private Double price;
+	@Enumerated(EnumType.STRING)
+	@Column(name="PIZZA_TYPE")
 	private PizzaType type;
 	
 	public Pizza() {

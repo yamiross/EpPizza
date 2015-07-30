@@ -2,10 +2,30 @@ package com.epam.pizza.domain;
 
 import java.util.List;
 
-public class Order {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table(name="PIZZA_ORDER")
+public class Order {
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="ORDER_ID")
 	private Integer id;
+	@ManyToOne
+	@JoinColumn(name="CUSTOMER_ID")
 	private Customer customer;
+	@ManyToMany
+	@JoinTable(name="ORDERED_PIZZA",
+			joinColumns={@JoinColumn(name="ORDER_ID")},
+			inverseJoinColumns={@JoinColumn(name="PIZZA_ID")})
 	private List<Pizza> pizzas;
 	
 	public Order() {
