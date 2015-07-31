@@ -11,8 +11,8 @@ import com.epam.pizza.domain.Customer;
 import com.epam.pizza.domain.Order;
 import com.epam.pizza.domain.Pizza;
 import com.epam.pizza.infrastructure.Benchmark;
-//import com.epam.pizzaapp.infrastructure.ObjectFactory;
 import com.epam.pizza.repository.OrderRepository;
+import com.epam.pizza.repository.TestOrderRepository;
 
 @Named("orderService")
 public class OrderServiceImpl implements OrderService {
