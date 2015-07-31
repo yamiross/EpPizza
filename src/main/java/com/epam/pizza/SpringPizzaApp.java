@@ -15,8 +15,8 @@ public class SpringPizzaApp {
 
         OrderService orderService = appCtx.getBean("orderService", OrderService.class);
         Order order = orderService.placeNewOrder(customer, 1, 2, 3);
-        System.out.println(order);
-        
+        System.out.println(order); 
+		
         appCtx.close();
 	}
 }

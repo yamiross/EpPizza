@@ -9,11 +9,13 @@ import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 
 import com.epam.pizza.domain.Pizza;
+import com.epam.pizza.infrastructure.Benchmark;
 @Repository("pizzaRepository")
 public class PizzaMysqlDao implements PizzaRepository {
 	@PersistenceContext
 	private EntityManager em;
 	
+	@Benchmark
 	public Pizza getPizzaByID(Integer id) {
 		return em.find(Pizza.class, id);
 	}

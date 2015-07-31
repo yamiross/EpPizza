@@ -10,9 +10,7 @@ import javax.transaction.Transactional;
 import com.epam.pizza.domain.Customer;
 import com.epam.pizza.domain.Order;
 import com.epam.pizza.domain.Pizza;
-import com.epam.pizza.infrastructure.Benchmark;
 import com.epam.pizza.repository.OrderRepository;
-import com.epam.pizza.repository.TestOrderRepository;
 
 @Named("orderService")
 public class OrderServiceImpl implements OrderService {
@@ -22,7 +20,6 @@ public class OrderServiceImpl implements OrderService {
 	@Inject
 	private OrderRepository orderRepository;
 	
-	@Benchmark
 	@Transactional
 	public Order placeNewOrder(Customer customer, Integer ... pizzasID) {
         List<Pizza> pizzas = new ArrayList<Pizza>();

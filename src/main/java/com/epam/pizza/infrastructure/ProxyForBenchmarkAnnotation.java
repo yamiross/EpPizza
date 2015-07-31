@@ -20,23 +20,24 @@ public class ProxyForBenchmarkAnnotation {
 
 	private Object createProxyObject(final Object obj) {
 		final Class<?> cl = obj.getClass();
-		return Proxy.newProxyInstance(cl.getClassLoader(), 
-								cl.getInterfaces(), 
-								new InvocationHandler() {
-									public Object invoke(Object proxy, Method method, Object[] args) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-										Method classMethod = cl.getMethod(method.getName(), method.getParameterTypes());
-										if (classMethod.isAnnotationPresent(Benchmark.class)) {
-											System.out.println("Benchmark starts " + method.getName());
-											long start = System.nanoTime();
-											Object returnVal = method.invoke(obj,  args);
-											long finish = System.nanoTime();
-											System.out.println("Benchmark finished " + method.getName());
-											System.out.println("Benchmark time: " + (finish - start));
-											return returnVal;
-										}
-										return method.invoke(obj,  args);
-									}
-								}
-		);
+		return Proxy.newProxyInstance(
+				cl.getClassLoader(), 
+				cl.getInterfaces(), 
+				new InvocationHandler() {
+					public Object invoke(Object proxy, Method method, Object[] args) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+						Method classMethod = cl.getMethod(method.getName(), method.getParameterTypes());
+						if (classMethod.isAnnotationPresent(Benchmark.class)) {
+							System.out.println("Benchmark starts " + method.getName());
+							long start = System.nanoTime();
+							Object returnVal = method.invoke(obj,  args);
+							long finish = System.nanoTime();
+							System.out.println("Benchmark finished " + method.getName());
+							System.out.println("Benchmark time: " + (finish - start));
+							return returnVal;
+						}
+						return method.invoke(obj,  args);
+					}
+				}
+				);
 	}
 }

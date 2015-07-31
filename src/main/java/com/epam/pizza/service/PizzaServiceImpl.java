@@ -8,7 +8,6 @@ import javax.transaction.Transactional;
 
 import com.epam.pizza.domain.Pizza;
 import com.epam.pizza.repository.PizzaRepository;
-import com.epam.pizza.repository.TestPizzaRepository;
 
 @Named("pizzaService")
 public class PizzaServiceImpl implements PizzaService {
