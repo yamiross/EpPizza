@@ -10,9 +10,9 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.util.ClassUtils;
 
-@Named
+//@Named
 public class BenchmarkBeanPostProcessor implements BeanPostProcessor {
-
+	
 	public Object postProcessBeforeInitialization(Object bean, String beanName)
 			throws BeansException {
 		return bean;
@@ -24,9 +24,7 @@ public class BenchmarkBeanPostProcessor implements BeanPostProcessor {
 		for (Method m : clazz.getMethods()) {
 			if (m.isAnnotationPresent(Benchmark.class)) {
 				System.out.println("Bean Class = " + bean.getClass().getName());
-
 				bean = createProxyObject(bean);
-
 			}
 		}
 		return bean;

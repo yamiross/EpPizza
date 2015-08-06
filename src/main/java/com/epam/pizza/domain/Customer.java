@@ -1,10 +1,13 @@
 package com.epam.pizza.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -14,10 +17,12 @@ public class Customer {
 	@Column(name="CUSTOMER_ID")
 	private Integer id;
 	@Column(name="NAME")
-	private String name; 
+	private String name;
+	@OneToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="ACCUMULATIVE_CARD_ID")
+	private AccumulativeCard accumulativeCard;
 	
-	public Customer() {
-	}
+	public Customer(){}
 	
 	public Customer(Integer id, String name) {
 		super();
@@ -41,8 +46,17 @@ public class Customer {
 		this.name = name;
 	}
 
+	public AccumulativeCard getAccumulativeCard() {
+		return accumulativeCard;
+	}
+
+	public void setAccumulativeCard(AccumulativeCard accumulativeCard) {
+		this.accumulativeCard = accumulativeCard;
+	}
+
 	@Override
 	public String toString() {
-		return "Customer [id=" + id + ", name=" + name + "]";
+		return "\nCustomer [id=" + id + ", name=" + name + ", accumulativeCard="
+				+ accumulativeCard + "]";
 	}
 }

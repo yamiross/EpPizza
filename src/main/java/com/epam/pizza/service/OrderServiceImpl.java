@@ -1,7 +1,8 @@
 package com.epam.pizza.service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -20,17 +21,19 @@ public class OrderServiceImpl implements OrderService {
 	@Inject
 	private OrderRepository orderRepository;
 	
+	public OrderServiceImpl() {	}
+	
 	@Transactional
-	public Order placeNewOrder(Customer customer, Integer ... pizzasID) {
-        List<Pizza> pizzas = new ArrayList<Pizza>();
+	public Order placeNewOrder(Customer customer, Map<Integer, Integer> pizzasId) {
+        Map<Pizza, Integer> pizzasForOrder = new HashMap<>();
         Pizza pizza;
-        for(Integer id : pizzasID){
-        	pizza = pizzaService.getPizzaByID(id);
-            pizzas.add(pizza);
+        for(Entry<Integer, Integer> pizzaId : pizzasId.entrySet()){
+        	pizza = pizzaService.getPizzaByID(pizzaId.getKey());
+        	pizzasForOrder.put(pizza, pizzaId.getValue());
         }
         Order newOrder = getNewOrder();
         newOrder.setCustomer(customer);
-        newOrder.setPizzas(pizzas);
+        newOrder.setPizzas(pizzasForOrder);
        
         orderRepository.saveOrder(newOrder);
         return newOrder;
