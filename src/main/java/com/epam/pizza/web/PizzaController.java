@@ -3,16 +3,20 @@ package com.epam.pizza.web;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.epam.pizza.domain.Pizza;
 import com.epam.pizza.domain.PizzaType;
+import com.epam.pizza.exception.PizzaItemNotFoundException;
 import com.epam.pizza.service.PizzaService;
 
 @Controller
@@ -44,6 +48,9 @@ public class PizzaController {
 	public String addForm(Model model,
 			@RequestParam(required=true, value="id")Integer id) {
 		Pizza pizza = pizzaService.getPizzaByID(id);
+		if (pizza == null) {
+			throw new PizzaItemNotFoundException("Pizza id : " + id);
+		}
 		model.addAttribute("pizza", pizza);
 		model.addAttribute("pizzaTypes", PizzaType.values());
 		return "editpizza";
