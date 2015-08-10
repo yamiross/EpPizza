@@ -2,11 +2,13 @@ package com.epam.pizza.domain;
 
 import java.util.Map;
 import java.util.Map.Entry;
+import com.epam.pizza.domain.Pizza;
 
 public class TotalCostOrderCalculator {
 	private static final double DISCOUNT = 0.3;
 
 	public double calculateTotalOrderPrice(Map<Pizza, Integer> pizzas) {
+		System.out.println(pizzas.size());
 		int count = 0;
 		double totalPrice = 0;
 		double biggestPrice = 0;
@@ -25,7 +27,7 @@ public class TotalCostOrderCalculator {
 			}
 		}
 
-		if (count <= 0 || count > 10) {
+		if (count < 0 || count > 10) {
 			throw new IllegalArgumentException();
 		}
 		if (count > 4) {

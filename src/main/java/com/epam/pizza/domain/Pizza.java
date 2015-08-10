@@ -23,17 +23,17 @@ public class Pizza {
 	private Double price;
 	@Enumerated(EnumType.STRING)
 	@Column(name="PIZZA_TYPE")
-	private PizzaType type;
+	private PizzaType pizzaType;
 	
 	public Pizza() {
 	}
 
-	public Pizza(Integer id, String pizzaName, Double price, PizzaType type) {
+	public Pizza(Integer id, String pizzaName, Double price, PizzaType pizzaType) {
 		super();
 		this.id = id;
 		this.pizzaName = pizzaName;
 		this.price = price;
-		this.type = type;
+		this.pizzaType = pizzaType;
 	}
 
 	public Integer getId() {
@@ -44,11 +44,11 @@ public class Pizza {
 		this.id = id;
 	}
 
-	public String getName() {
+	public String getPizzaName() {
 		return pizzaName;
 	}
 
-	public void setName(String name) {
+	public void setPizzaName(String name) {
 		this.pizzaName = name;
 	}
 
@@ -60,12 +60,12 @@ public class Pizza {
 		this.price = price;
 	}
 
-	public PizzaType getType() {
-		return type;
+	public PizzaType getPizzaType() {
+		return pizzaType;
 	}
 
-	public void setType(PizzaType type) {
-		this.type = type;
+	public void setPizzaType(PizzaType pizzaType) {
+		this.pizzaType = pizzaType;
 	}
 
 	
@@ -77,7 +77,7 @@ public class Pizza {
 		result = prime * result
 				+ ((pizzaName == null) ? 0 : pizzaName.hashCode());
 		result = prime * result + ((price == null) ? 0 : price.hashCode());
-		result = prime * result + ((type == null) ? 0 : type.hashCode());
+		result = prime * result + ((pizzaType == null) ? 0 : pizzaType.hashCode());
 		return result;
 	}
 
@@ -100,7 +100,7 @@ public class Pizza {
 				return false;
 		} else if (!price.equals(other.price))
 			return false;
-		if (type != other.type)
+		if (pizzaType != other.pizzaType)
 			return false;
 		return true;
 	}
@@ -108,6 +108,6 @@ public class Pizza {
 	@Override
 	public String toString() {
 		return "\nPizza [id=" + id + ", pizzaName=" + pizzaName + ", price="
-				+ price + ", type=" + type + "]";
+				+ price + ", pizzaType=" + pizzaType + "]";
 	}
 }
