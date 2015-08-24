@@ -28,7 +28,7 @@ public class OrderServiceImpl implements OrderService {
         Map<Pizza, Integer> pizzasForOrder = new HashMap<>();
         Pizza pizza;
         for(Entry<Integer, Integer> pizzaId : pizzasId.entrySet()){
-        	pizza = pizzaService.getPizzaByID(pizzaId.getKey());
+        	pizza = pizzaService.getPizzaById(pizzaId.getKey());
         	pizzasForOrder.put(pizza, pizzaId.getValue());
         }
         Order newOrder = getNewOrder();

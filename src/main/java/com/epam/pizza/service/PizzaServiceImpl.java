@@ -14,8 +14,8 @@ public class PizzaServiceImpl implements PizzaService {
 	@Inject
 	private PizzaRepository pizzaRepository;
 	
-	public Pizza getPizzaByID(Integer id) {
-		return pizzaRepository.getPizzaByID(id);
+	public Pizza getPizzaById(Integer id) {
+		return pizzaRepository.getPizzaById(id);
 	}
 
 	public List<Pizza> findAll() {

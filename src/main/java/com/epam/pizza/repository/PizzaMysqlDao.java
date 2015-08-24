@@ -15,7 +15,7 @@ public class PizzaMysqlDao implements PizzaRepository {
 	@PersistenceContext
 	private EntityManager em;
 
-	public Pizza getPizzaByID(Integer id) {
+	public Pizza getPizzaById(Integer id) {
 		return em.find(Pizza.class, id);
 	}
 
