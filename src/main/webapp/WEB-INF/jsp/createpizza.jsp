@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="create" method="post">
+	<form method="post">
 		<table>
 			<tr>
 				<td>Pizza name</td>

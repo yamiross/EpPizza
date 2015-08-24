@@ -3,16 +3,13 @@ package com.epam.pizza.web;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.epam.pizza.domain.Pizza;
 import com.epam.pizza.domain.PizzaType;
@@ -25,17 +22,17 @@ public class PizzaController {
 	@Inject
 	private PizzaService pizzaService;
 
-	@RequestMapping(value="/", method=RequestMethod.GET)
+	@RequestMapping(method=RequestMethod.GET)
 	public String view(Model model) {
 		List<Pizza> pizzas = pizzaService.findAll();
 		model.addAttribute("pizzas", pizzas);
-		return "show";
+		return "viewpizza";
 	}
 
 	@RequestMapping(value="/create", method=RequestMethod.GET)
 	public String addPage(Model model) {
 		model.addAttribute("pizzaTypes", PizzaType.values());
-		return "addpizza";
+		return "createpizza";
 	}
 
 	@RequestMapping(value="/create", method=RequestMethod.POST)
