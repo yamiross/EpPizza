@@ -8,5 +8,6 @@ public interface PizzaRepository {
 	
 	public Pizza getPizzaById(Integer id);
 	public List<Pizza> findAll();
+	public void modify(Pizza pizza);
 	public void save(Pizza pizza);
 }

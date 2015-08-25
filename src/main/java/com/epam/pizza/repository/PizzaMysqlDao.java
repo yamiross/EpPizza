@@ -24,11 +24,12 @@ public class PizzaMysqlDao implements PizzaRepository {
 		return pizzas.getResultList();
 	}
 
+	@Override
+	public void modify(Pizza pizza) {
+		em.merge(pizza);
+	}
+
 	public void save(Pizza pizza) {
-		if (pizza.getId() != null) {
-			em.merge(pizza);
-		} else {
-			em.persist(pizza);
-		}
+		em.persist(pizza);
 	}
 }

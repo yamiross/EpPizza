@@ -45,7 +45,7 @@ public class PizzaController extends AbstractPizzaContoller {
 
 	@RequestMapping(value="edit", method=RequestMethod.POST)
 	public String addForm(@ModelAttribute Pizza pizza) {
-		pizzaService.save(pizza);
+		pizzaService.modify(pizza);
 		return "redirect:";
 	}
 }

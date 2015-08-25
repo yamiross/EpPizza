@@ -13,15 +13,12 @@ import org.springframework.web.bind.annotation.InitBinder;
 
 import com.epam.pizza.domain.Pizza;
 import com.epam.pizza.exception.PizzaItemNotFoundException;
+import com.epam.pizza.service.PizzaService;
 
-/**
- *
- * @author andrii
- */
 public abstract class AbstractPizzaContoller {
 
     @Autowired
-    protected com.epam.pizza.service.PizzaService pizzaService;
+    protected PizzaService pizzaService;
 
     private Pizza getPizzaById(Integer id) {
         if (id <= 0) {

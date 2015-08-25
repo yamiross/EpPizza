@@ -23,6 +23,11 @@ public class PizzaServiceImpl implements PizzaService {
 	}
 	
 	@Transactional
+	public void modify(Pizza pizza) {
+		pizzaRepository.modify(pizza);
+	};
+	
+	@Transactional
 	public void save(Pizza pizza) {
 		pizzaRepository.save(pizza);
 	}
