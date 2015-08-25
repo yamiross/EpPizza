@@ -30,7 +30,7 @@ public class ShoppingCartController extends AbstractCartContoller {
 			@ModelAttribute("cart") ShoppingCart cart) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         cart.placeOrder(auth.getName());
-		return "redirect:/orders";
+		return "redirect:/profile/orders";
 	}
 	
 	@RequestMapping(value="/edit", method=RequestMethod.POST)
@@ -43,7 +43,7 @@ public class ShoppingCartController extends AbstractCartContoller {
 		} else {
 			cart.changeAmount(pizza, amount);
 		}
-		return "redirect:/cart";
+		return "redirect:/profile/cart";
 	}
 	
 	@RequestMapping(value="/remove", method=RequestMethod.POST)
@@ -51,7 +51,7 @@ public class ShoppingCartController extends AbstractCartContoller {
 			@ModelAttribute("cart") ShoppingCart cart,
 			@RequestParam("pizzaId") Pizza pizza) {
 		cart.removeItem(pizza);
-		return "redirect:/cart";
+		return "redirect:/profile/cart";
 	}
 	
 	@Lookup

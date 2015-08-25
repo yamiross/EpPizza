@@ -21,13 +21,13 @@
 				<td>${pizza.key.pizzaName}</td>
 				<td>${pizza.key.price * pizza.value}</td>
 				<td>${pizza.key.pizzaType}</td>
-				<td><form action="/cart/edit" method="post">
+				<td><form action="/profile/cart/edit" method="post">
 						<input type="hidden" name="pizzaId" value="${pizza.key.id}" /> <input
 							type="text" name="amount" value="${pizza.value}" /> <input
 							type="submit" value="Save" />
 					</form></td>
 				<td>
-					<form action="/cart/remove" method="post">
+					<form action="/profile/cart/remove" method="post">
 						<input type="hidden" name="pizzaId" value="${pizza.key.id}" /> <input
 							type="submit" value="Remove" />
 					</form>
@@ -42,7 +42,7 @@
 		</c:choose>
 	<form method="post">
 		<input type="submit" value="Place order"
-			<c:if test="${cart.itemsCount le 0 or cart.itemsCount ge 10}" >disabled</c:if> />
+			<c:if test="${cart.itemsCount le 0 or cart.itemsCount gt 10}" >disabled</c:if> />
 	</form>
 	<a href="/pizzas">Back</a>
 </body>

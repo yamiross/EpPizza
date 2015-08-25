@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.Transactional;
 
+import com.epam.pizza.domain.AccumulativeCard;
 import com.epam.pizza.domain.Customer;
 import com.epam.pizza.domain.Order;
 import com.epam.pizza.domain.Pizza;
@@ -36,13 +37,14 @@ public class OrderServiceImpl implements OrderService {
 	@Transactional
 	public Order placeNewOrder(String email, Map<Pizza, Integer> pizzas) {
 		Customer customer = customerService.findByName(email);
+		AccumulativeCard accumulativeCard = customer.getAccumulativeCard();
 		Order newOrder = getNewOrder();
 		if (customer != null) {
 			newOrder.setCustomer(customer);
 			newOrder.setAddress(customer.getAccumulativeCard().getAddress());
 			newOrder.setPizzas(pizzas);
 			
-			Double orderPrice = priceCalculator.calculateTotalOrderPrice(pizzas);
+			Double orderPrice = priceCalculator.calculateTotalOrderPrice(pizzas, accumulativeCard.getAccumulated());
 			newOrder.setPrice(orderPrice);
 			
 			Double accumulated = customer.getAccumulativeCard().getAccumulated();

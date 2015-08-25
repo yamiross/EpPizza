@@ -7,9 +7,13 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
+import com.epam.pizza.domain.Customer;
 import com.epam.pizza.domain.Pizza;
 import com.epam.pizza.domain.TotalCostOrderCalculator;
+import com.epam.pizza.service.CustomerService;
 import com.epam.pizza.service.OrderService;
 
 @Named("shoppingCart")
@@ -17,6 +21,8 @@ import com.epam.pizza.service.OrderService;
 public class ShoppingCart {
 	@Inject
 	private OrderService orderService;
+	@Inject
+	private CustomerService customerService;
 	private Map<Pizza, Integer> cart;
 	@Inject
 	private TotalCostOrderCalculator costCalculator;
@@ -45,8 +51,8 @@ public class ShoppingCart {
 		cart.put(pizza, amount);
 	}
 	
-	public void placeOrder(String email) {
-		orderService.placeNewOrder(email, cart);
+	public void placeOrder(String name) {
+		orderService.placeNewOrder(name, cart);
 		reset();
 	}
 	
@@ -60,7 +66,10 @@ public class ShoppingCart {
 		if (cart.isEmpty()) {
 			return 0D;
 		}
-		return costCalculator.calculateTotalOrderPrice(cart);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+		Customer customer = customerService.findByName(name);
+		return costCalculator.calculateTotalOrderPrice(cart, customer.getAccumulativeCard().getAccumulated());
 	}
 }
 	
