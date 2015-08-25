@@ -8,4 +8,5 @@ public interface OrderRepository {
 
 	public void saveOrder(Order order);
 	public List<Order> findAllByCustomer(Integer customerId);
+	public List<Order> findAll();
 }

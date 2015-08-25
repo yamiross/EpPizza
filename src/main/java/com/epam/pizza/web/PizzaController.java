@@ -64,7 +64,7 @@ public class PizzaController extends AbstractPizzaContoller {
 		}
 		return "redirect:/pizzas";
 	}
-	
+
 	@Lookup
 	protected ShoppingCart getShoppingCart() {return null;};
 }

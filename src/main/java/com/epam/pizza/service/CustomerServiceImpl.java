@@ -15,6 +15,10 @@ public class CustomerServiceImpl implements CustomerService {
 	public Customer findById(Integer id) {
 		return customerRepository.findById(id);
 	}
+	
+	public Customer findByName(String name) {
+		return customerRepository.findByName(name);
+	}
 
 	@Transactional
 	public void save(Customer customer) {

@@ -15,7 +15,10 @@ public class OrderMysqlDao implements OrderRepository {
 	@PersistenceContext
 	private EntityManager em;
 	
-	@Override
+	public List<Order> findAll() {
+		return em.createQuery("FROM Order", Order.class).getResultList();
+	}
+	
 	public List<Order> findAllByCustomer(Integer customerId) {
 		TypedQuery<Order> query = em.createNamedQuery("findAllByCustomer", Order.class);
 		query.setParameter("customerId", customerId);

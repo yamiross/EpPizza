@@ -29,7 +29,6 @@ public class TotalCostOrderCalculator {
 				}
 			}
 		}
-		System.out.println(count);
 		if (count <= 0 || count > 10) {
 			throw new IllegalArgumentException();
 		}

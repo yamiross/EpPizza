@@ -10,20 +10,25 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.NamedQuery;
+
 @Entity
 @Table(name="CUSTOMER")
+@NamedQuery(name="findCustomerByName", query="SELECT c FROM Customer c WHERE c.name = :name")
 public class Customer {
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="CUSTOMER_ID")
 	private Integer id;
 	@Column(name="NAME")
 	private String name;
+	@Column(name="password")
+	private String password;
 	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="ACCUMULATIVE_CARD_ID")
 	private AccumulativeCard accumulativeCard;
-	
+
 	public Customer(){}
-	
+
 	public Customer(Integer id, String name) {
 		super();
 		this.id = id;
@@ -46,6 +51,14 @@ public class Customer {
 		this.name = name;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public AccumulativeCard getAccumulativeCard() {
 		return accumulativeCard;
 	}
@@ -56,7 +69,6 @@ public class Customer {
 
 	@Override
 	public String toString() {
-		return "\nCustomer [id=" + id + ", name=" + name + ", accumulativeCard="
-				+ accumulativeCard + "]";
+		return "Customer [id=" + id + ", name=" + name + ", accumulativeCard=" + accumulativeCard + "]";
 	}
 }

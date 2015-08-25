@@ -8,6 +8,7 @@ import com.epam.pizza.domain.Pizza;
 
 public interface OrderService {
 
-	public Order placeNewOrder(Integer customerId, Map<Pizza, Integer> pizzas);
+	public Order placeNewOrder(String email, Map<Pizza, Integer> pizzas);
 	public List<Order> findAllByCustomer(Integer customerId);
+	public List<Order> findAll();
 }

@@ -45,12 +45,21 @@ public class ShoppingCart {
 		cart.put(pizza, amount);
 	}
 	
-	public void placeOrder(Integer customerId) {
-		orderService.placeNewOrder(customerId, cart);
+	public void placeOrder(String email) {
+		orderService.placeNewOrder(email, cart);
 		reset();
 	}
 	
+	public Integer getItemsCount() {
+		Integer count = 0;
+		count += cart.values().stream().mapToInt(value -> value).sum();
+		return count;
+	}
+	
 	public Double getTotalSum() {
+		if (cart.isEmpty()) {
+			return 0D;
+		}
 		return costCalculator.calculateTotalOrderPrice(cart);
 	}
 }

@@ -1,6 +1,10 @@
 package com.epam.pizza.web;
 
+import org.springframework.beans.factory.annotation.Lookup;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -10,23 +14,27 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.epam.pizza.domain.Pizza;
 
 @Controller
-@RequestMapping("/cart")
+@RequestMapping("/profile/cart")
 @SessionAttributes("cart")
-public class ShoppingCartController {
+public class ShoppingCartController extends AbstractCartContoller {
 	@RequestMapping(method=RequestMethod.GET)
-	public String viewCart() {
+	public String viewCart(Model model) {
+		if (!model.containsAttribute("cart")) {
+			model.addAttribute("cart", getShoppingCart());
+		}
 		return "viewCart";
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
 	public String placeOrder(
 			@ModelAttribute("cart") ShoppingCart cart) {
-		cart.placeOrder(1);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        cart.placeOrder(auth.getName());
 		return "redirect:/orders";
 	}
 	
 	@RequestMapping(value="/edit", method=RequestMethod.POST)
-	public String removeItemFromCart(
+	public String editItemInCart(
 			@ModelAttribute("cart") ShoppingCart cart,
 			@RequestParam("pizzaId") Pizza pizza,
 			@RequestParam("amount") Integer amount) {
@@ -45,4 +53,7 @@ public class ShoppingCartController {
 		cart.removeItem(pizza);
 		return "redirect:/cart";
 	}
+	
+	@Lookup
+	protected ShoppingCart getShoppingCart() {return null;};
 }

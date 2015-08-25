@@ -1,9 +1,7 @@
 package com.epam.pizza.service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -27,14 +25,17 @@ public class OrderServiceImpl implements OrderService {
 
 	public OrderServiceImpl() {	}
 
-	@Override
 	public List<Order> findAllByCustomer(Integer customerId) {
 		return orderRepository.findAllByCustomer(customerId);
 	}
 	
+	public List<Order> findAll() {
+		return orderRepository.findAll();
+	}
+	
 	@Transactional
-	public Order placeNewOrder(Integer customerId, Map<Pizza, Integer> pizzas) {
-		Customer customer = customerService.findById(customerId);
+	public Order placeNewOrder(String email, Map<Pizza, Integer> pizzas) {
+		Customer customer = customerService.findByName(email);
 		Order newOrder = getNewOrder();
 		if (customer != null) {
 			newOrder.setCustomer(customer);

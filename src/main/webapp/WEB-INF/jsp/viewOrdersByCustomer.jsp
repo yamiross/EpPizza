@@ -5,14 +5,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>All Orders</title>
+<title>My Orders</title>
 </head>
 <body>
-	<h1>All Orders</h1>
+	<h1>My Orders</h1>
 	<table border="2" cellpadding="2">
 		<tr>
 			<td>Order Id</td>
-			<td>Customer name</td>
 			<td>Pizzas</td>
 			<td>Amount</td>
 			<td>Total price</td>
@@ -20,7 +19,6 @@
 		<c:forEach items="${orders}" var="order">
 			<tr>
 				<td>${order.id}</td>
-				<td>${order.customer.name}</td>
 				<td><table>
 						<c:forEach items="${order.pizzas}" var="pizza">
 							<tr>
