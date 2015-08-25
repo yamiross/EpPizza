@@ -69,7 +69,7 @@ public class ShoppingCart {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
 		Customer customer = customerService.findByName(name);
-		return costCalculator.calculateTotalOrderPrice(cart, customer.getAccumulativeCard().getAccumulated());
+		return costCalculator.calculateTotalOrderPrice(cart, customer.getAccumulativeCard());
 	}
 }
 	

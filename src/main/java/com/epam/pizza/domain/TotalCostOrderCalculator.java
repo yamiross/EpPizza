@@ -12,7 +12,7 @@ public class TotalCostOrderCalculator {
 	private static final double FIFTH_PIZZA_DISCOUNT = 0.3;
 	private static final double FIRST_LEVEL_DISCOUNT = 0.05;
 
-	public double calculateTotalOrderPrice(Map<Pizza, Integer> pizzas, Double accumulated) {
+	public double calculateTotalOrderPrice(Map<Pizza, Integer> pizzas,	AccumulativeCard accumulativeCard) {
 		int count = 0;
 		double totalPrice = 0;
 		double biggestPrice = 0;
@@ -36,7 +36,7 @@ public class TotalCostOrderCalculator {
 		if (count > 4) {
 			totalPrice -= calculateMoreThanFourItemsDiscount(biggestPrice);
 		}
-		totalPrice -= calculateAccumulativeCardDiscount(totalPrice, accumulated);
+		totalPrice -= calculateAccumulativeCardDiscount(totalPrice, accumulativeCard);
 		return totalPrice;
 	}
 
@@ -44,9 +44,11 @@ public class TotalCostOrderCalculator {
 		return biggestPrice * FIFTH_PIZZA_DISCOUNT;
 	}
 	
-	private double calculateAccumulativeCardDiscount(double totalPrice, double accumulated) {
-		if (accumulated > 200) {
-			return totalPrice * FIRST_LEVEL_DISCOUNT;	
+	private double calculateAccumulativeCardDiscount(double totalPrice, AccumulativeCard accumulativeCard) {
+		if (accumulativeCard != null && accumulativeCard.getAccumulated() != null) {
+			if (accumulativeCard.getAccumulated() >= 200) {
+				return totalPrice * FIRST_LEVEL_DISCOUNT;	
+			}
 		}
 		return 0;
 	}
