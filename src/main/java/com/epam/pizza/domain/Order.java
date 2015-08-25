@@ -7,16 +7,19 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyJoinColumn;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="PIZZA_ORDER")
+@NamedQuery(name="findAllByCustomer", query="SELECT o FROM Order o WHERE o.customer.id = :customerId")
 public class Order {
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="ORDER_ID")
@@ -27,7 +30,9 @@ public class Order {
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="ADDRESS_ID")
 	private Address address;
-	@ElementCollection
+	@Column(name="TOTAL_PRICE")
+	private Double price;
+	@ElementCollection(fetch=FetchType.EAGER)
 	@CollectionTable(
 			name="ORDERED_PIZZA", 
 			joinColumns = {@JoinColumn(name="ORDER_ID")})
@@ -76,9 +81,17 @@ public class Order {
 		this.pizzas = pizzas;
 	}
 
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+
 	@Override
 	public String toString() {
 		return "Order [id=" + id + ", customer=" + customer + ", address="
-				+ address + ", \npizzas=" + pizzas + "]";
+				+ address + ", pizzas=" + pizzas + ", price=" + price + "]";
 	}
 }

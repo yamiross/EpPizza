@@ -20,8 +20,15 @@
 				<td>${pizza.price}</td>
 				<td>${pizza.pizzaType}</td>
 				<td>
+					<form method="post">
+						<input type="hidden" name="pizzaId" value="${pizza.id}" /> <input
+							type="text" name="amount" value="0" /> <input type="submit"
+							value="Add to cart" />
+					</form>
+				</td>
+				<td>
 					<form action="/pizzas/edit" method="get">
-						<input type="hidden" name="id" value="${pizza.id}" /> <input
+						<input type="hidden" name="pizzaId" value="${pizza.id}" /> <input
 							type="submit" value="Edit" />
 					</form>
 				</td>
@@ -29,5 +36,7 @@
 		</c:forEach>
 	</table>
 	<a href="/pizzas/create">Create</a> new pizza.
+	<br/>
+	<a href="/cart">Shopping Cart</a>
 </body>
 </html>
